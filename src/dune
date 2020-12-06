@@ -1,0 +1,4 @@
+(library
+  (name aoc2020)
+  (libraries base stdio)
+  (flags -open Base -open Stdio))

@@ -1,0 +1,26 @@
+{
+  "name": "aoc2020",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "esy": {
+    "buildsInSource": "_build",
+    "buildDev": "dune build --root #{self.root} @all"
+  },
+  "scripts": {
+    "test": "esy x test"
+  },
+  "keywords": [],
+  "author": "Richard Davison",
+  "dependencies": {
+    "@opam/dune": "*",
+    "@opam/base": "v0.14.0",
+    "@opam/stdio": "v0.14.0",
+    "ocaml": "~4.10.0"
+  },
+  "devDependencies": {
+    "@opam/merlin": "^3.4.2",
+    "@opam/ocaml-lsp-server": "github:ocaml/ocaml-lsp:ocaml-lsp-server.opam",
+    "ocaml": "~4.10.0"
+  }
+}
