@@ -16,6 +16,7 @@
     "@opam/dune": "*",
     "@opam/base": "v0.14.0",
     "@opam/stdio": "v0.14.0",
+    "@opam/ppx_expect": "v0.14.1",
     "ocaml": "~4.11.1"
   },
   "devDependencies": {
