@@ -1,4 +1,4 @@
-type t = int list
+type t = private int list
 
 val of_string : string -> t
 
