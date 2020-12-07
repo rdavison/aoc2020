@@ -1,5 +1,5 @@
 (library
-  (name aoc2020)
+  (name aoc)
   (libraries base stdio)
   (inline_tests)
   (flags -open Base -open Stdio)
