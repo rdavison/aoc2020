@@ -8,7 +8,8 @@
     "buildDev": "dune build --root #{self.root} @all"
   },
   "scripts": {
-    "test": "esy x test"
+    "test": "esy dune runtest",
+    "promote": "esy dune promote"
   },
   "keywords": [],
   "author": "Richard Davison",
