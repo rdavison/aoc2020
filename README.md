@@ -1,6 +1,6 @@
 # Advent of Code 2020
 
-- [ ] Day 1
+- [x] Day 1
 - [ ] Day 2
 - [ ] Day 3
 - [ ] Day 4

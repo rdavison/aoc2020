@@ -1,4 +1,6 @@
 (library
   (name aoc2020)
   (libraries base stdio)
-  (flags -open Base -open Stdio))
+  (inline_tests)
+  (flags -open Base -open Stdio)
+  (preprocess (pps ppx_expect)))
