@@ -9,14 +9,15 @@ let of_string x =
          | line -> Some (Int.of_string line))
 ;;
 
-let sums_to_2020 l = Int.equal 2020 (List.fold l ~init:0 ~f:( + ))
+let sum l = List.fold l ~init:0 ~f:( + )
+let pred l = sum l = 2020
 
 let part1 l =
   let rec search l =
     match l with
     | [] -> None
     | x :: ys ->
-      (match List.find ys ~f:(fun y -> sums_to_2020 [ x; y ]) with
+      (match List.find ys ~f:(fun y -> pred [ x; y ]) with
       | Some y -> Some (x * y)
       | None -> search ys)
   in
@@ -28,11 +29,11 @@ let part2 l =
     match l with
     | [] | [ _ ] -> None
     | x :: y :: zs ->
-      (match List.find zs ~f:(fun z -> sums_to_2020 [ x; y; z ]) with
+      (match List.find zs ~f:(fun z -> pred [ x; y; z ]) with
       | Some z -> Some (x * y * z)
       | None -> List.find_map [ x :: zs; y :: zs; zs ] ~f:search)
   in
-  List.sort l ~compare:Int.compare |> search
+  search (List.sort l ~compare:Int.compare)
 ;;
 
 let%expect_test "given examples" =
