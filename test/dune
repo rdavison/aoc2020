@@ -1,0 +1,7 @@
+(library
+  (name test)
+  (libraries base stdio aoc2020)
+  (inline_tests)
+  (flags -open Base -open Stdio)
+  (preprocess (pps ppx_expect ppx_blob))
+  (preprocessor_deps (source_tree day)))

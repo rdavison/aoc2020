@@ -11,42 +11,39 @@ let of_string x =
 
 let sums_to_2020 l = Int.equal 2020 (List.fold l ~init:0 ~f:( + ))
 
-let rec part1 l =
-  match l with
-  | [] -> failwith "Not found"
-  | x :: rest ->
-    (match List.find rest ~f:(fun y -> sums_to_2020 [ x; y ]) with
-    | Some y -> x * y
-    | None -> part1 rest)
-;;
-
-let part2 l =
-  let rec loop l =
+let part1 l =
+  let rec search l =
     match l with
     | [] -> None
     | x :: ys ->
-      (match ys with
-      | [] -> None
-      | y :: zs ->
-        (match List.find zs ~f:(fun z -> sums_to_2020 [ x; y; z ]) with
-        | Some z -> Some (x * y * z)
-        | None ->
-          (match loop (x :: zs) with
-          | Some a -> Some a
-          | None ->
-            (match loop (y :: zs) with
-            | Some a -> Some a
-            | None -> loop zs))))
+      (match List.find ys ~f:(fun y -> sums_to_2020 [ x; y ]) with
+      | Some y -> Some (x * y)
+      | None -> search ys)
   in
-  match l |> List.sort ~compare:Int.compare |> loop with
-  | None -> failwith "Not found"
-  | Some a -> a
+  search l
+;;
+
+let part2 l =
+  let rec search l =
+    match l with
+    | [] | [ _ ] -> None
+    | x :: y :: zs ->
+      (match List.find zs ~f:(fun z -> sums_to_2020 [ x; y; z ]) with
+      | Some z -> Some (x * y * z)
+      | None -> List.find_map [ x :: zs; y :: zs; zs ] ~f:search)
+  in
+  List.sort l ~compare:Int.compare |> search
 ;;
 
 let%expect_test "given examples" =
   let data = [ 1721; 979; 366; 299; 675; 1456 ] in
-  printf "%d" (part1 data);
+  let runtest f =
+    match f data with
+    | None -> printf "Not Found"
+    | Some num -> printf "%d\n" num
+  in
+  runtest part1;
   [%expect {| 514579 |}];
-  printf "%d" (part2 data);
+  runtest part2;
   [%expect {| 241861950 |}]
 ;;

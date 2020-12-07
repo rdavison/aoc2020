@@ -40,7 +40,7 @@ val of_string : string -> t
   Of course, your expense report is much larger. Find the two entries that sum to
   2020; what do you get if you multiply them together?
 *)
-val part1 : t -> int
+val part1 : t -> int option
 
 (**
   The Elves in accounting are thankful for your help; one of them even offers you
@@ -54,4 +54,4 @@ val part1 : t -> int
   In your expense report, what is the product of the three entries that sum to
   2020?
 *)
-val part2 : t -> int
+val part2 : t -> int option
