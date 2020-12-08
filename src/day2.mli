@@ -49,4 +49,4 @@ val of_string : string -> t
   
   How many passwords are valid according to their policies?
 *)
-val run : t -> int
+val part1 : t -> int

@@ -56,7 +56,7 @@ let is_valid (entry : entry) =
   entry.policy.low <= count && count <= entry.policy.high
 ;;
 
-let run t = List.fold t ~init:0 ~f:(fun i entry -> if is_valid entry then i + 1 else i)
+let part1 t = List.fold t ~init:0 ~f:(fun i entry -> if is_valid entry then i + 1 else i)
 
 let%expect_test "given examples" =
   let data =
@@ -65,6 +65,6 @@ let%expect_test "given examples" =
     ; { policy = { low = 2; high = 9; letter = 'c' }; password = "ccccccccc" }
     ]
   in
-  printf "%d\n" (run data);
+  printf "%d\n" (part1 data);
   [%expect {| 2 |}]
 ;;
