@@ -76,5 +76,6 @@ let%expect_test "of_string example" =
      (Tree Empty Tree Tree Empty Empty Empty Tree Empty Empty Empty)
      (Tree Empty Empty Empty Tree Tree Empty Empty Empty Empty Tree)
      (Empty Tree Empty Empty Tree Empty Empty Empty Tree Empty Tree)) |}];
-  printf "%d" (part1 t)
+  printf "%d" (part1 t);
+  [%expect {| 7 |}]
 ;;
