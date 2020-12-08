@@ -29,9 +29,7 @@ let get (t : t) ~row ~col =
   | false -> None
 ;;
 
-let part1 t =
-  let d_row = 1 in
-  let d_col = 3 in
+let count_trees t d_row d_col =
   let rec loop row col acc =
     match get t ~row ~col with
     | None -> acc
@@ -44,7 +42,16 @@ let part1 t =
   loop 0 0 0
 ;;
 
-let%expect_test "of_string example" =
+let part1 t = count_trees t 1 3
+
+let part2_slopes t =
+  let slopes = [ 1, 1; 3, 1; 5, 1; 7, 1; 1, 2 ] in
+  List.map slopes ~f:(fun (d_cols, d_rows) -> count_trees t d_rows d_cols)
+;;
+
+let part2 t = part2_slopes t |> List.fold ~init:1 ~f:( * )
+
+let%expect_test "example" =
   let data =
     String.concat
       ~sep:"\n"
@@ -77,5 +84,9 @@ let%expect_test "of_string example" =
      (Tree Empty Empty Empty Tree Tree Empty Empty Empty Empty Tree)
      (Empty Tree Empty Empty Tree Empty Empty Empty Tree Empty Tree)) |}];
   printf "%d" (part1 t);
-  [%expect {| 7 |}]
+  [%expect {| 7 |}];
+  print_s ([%sexp_of: int list] (part2_slopes t));
+  [%expect {| (2 7 3 4 2) |}];
+  printf "%d" (part2 t);
+  [%expect {| 336 |}]
 ;;

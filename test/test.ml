@@ -27,5 +27,7 @@ let%expect_test "day 3" =
   let input = M.of_string [%blob "day/3/input"] in
   let to_string x = Int.to_string x in
   printf "%s" (M.part1 input |> to_string);
-  [%expect {| 240 |}]
+  [%expect {| 240 |}];
+  printf "%s" (M.part2 input |> to_string);
+  [%expect {| 2832009600 |}]
 ;;
