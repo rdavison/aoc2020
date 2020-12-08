@@ -63,21 +63,28 @@ let part1 t =
 
 let part2 t =
   run t ~is_valid:(fun entry ->
-      let state =
-        String.foldi entry.password ~init:`Init ~f:(fun i state c ->
-            let i = i + 1 in
-            if (i = entry.policy.low || i = entry.policy.high)
-               && Char.equal c entry.policy.letter
-            then (
-              match state with
-              | `Init -> `Ok
-              | `Ok -> `Fail
-              | `Fail -> `Fail)
-            else state)
-      in
-      match state with
-      | `Init | `Fail -> false
-      | `Ok -> true)
+      String.fold_until
+        entry.password
+        ~init:(1, `Init)
+        ~finish:(fun (_i, state) ->
+          match state with
+          | `Init -> false
+          | `Ok -> true)
+        ~f:(fun (i, state) c ->
+          let continue state = Continue_or_stop.Continue (i + 1, state) in
+          let pass_thru = continue state in
+          let fail = Continue_or_stop.Stop false in
+          let can_transition_state =
+            let in_bounds = i = entry.policy.low || i = entry.policy.high in
+            let letter_match = Char.equal c entry.policy.letter in
+            in_bounds && letter_match
+          in
+          match can_transition_state with
+          | false -> pass_thru
+          | true ->
+            (match state with
+            | `Init -> continue `Ok
+            | `Ok -> fail)))
 ;;
 
 let%expect_test "given examples" =
