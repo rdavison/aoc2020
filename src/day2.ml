@@ -48,15 +48,37 @@ let%expect_test "of_string example" =
      ((policy ((low 2) (high 9) (letter c))) (password ccccccccc))) |}]
 ;;
 
-let is_valid (entry : entry) =
-  let count =
-    String.fold entry.password ~init:0 ~f:(fun i c ->
-        if Char.equal c entry.policy.letter then i + 1 else i)
-  in
-  entry.policy.low <= count && count <= entry.policy.high
+let run t ~is_valid =
+  List.fold t ~init:0 ~f:(fun i entry -> if is_valid entry then i + 1 else i)
 ;;
 
-let part1 t = List.fold t ~init:0 ~f:(fun i entry -> if is_valid entry then i + 1 else i)
+let part1 t =
+  run t ~is_valid:(fun entry ->
+      let count =
+        String.fold entry.password ~init:0 ~f:(fun count c ->
+            if Char.equal c entry.policy.letter then count + 1 else count)
+      in
+      entry.policy.low <= count && count <= entry.policy.high)
+;;
+
+let part2 t =
+  run t ~is_valid:(fun entry ->
+      let state =
+        String.foldi entry.password ~init:`Init ~f:(fun i state c ->
+            let i = i + 1 in
+            if (i = entry.policy.low || i = entry.policy.high)
+               && Char.equal c entry.policy.letter
+            then (
+              match state with
+              | `Init -> `Ok
+              | `Ok -> `Fail
+              | `Fail -> `Fail)
+            else state)
+      in
+      match state with
+      | `Init | `Fail -> false
+      | `Ok -> true)
+;;
 
 let%expect_test "given examples" =
   let data =
@@ -66,5 +88,7 @@ let%expect_test "given examples" =
     ]
   in
   printf "%d\n" (part1 data);
-  [%expect {| 2 |}]
+  [%expect {| 2 |}];
+  printf "%d\n" (part2 data);
+  [%expect {| 1 |}]
 ;;
