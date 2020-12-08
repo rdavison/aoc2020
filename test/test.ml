@@ -1,5 +1,6 @@
 let%expect_test "day 1" =
-  let input = Aoc.Day1.of_string [%blob "day/1/input"] in
+  let module M = Aoc.Day1 in
+  let input = M.of_string [%blob "day/1/input"] in
   let to_string x =
     match x with
     | None -> "Not found"
@@ -12,10 +13,21 @@ let%expect_test "day 1" =
 ;;
 
 let%expect_test "day 2" =
-  let input = Aoc.Day2.of_string [%blob "day/2/input"] in
+  let module M = Aoc.Day2 in
+  let input = M.of_string [%blob "day/2/input"] in
   let to_string x = Int.to_string x in
-  printf "%s" (Aoc.Day2.part1 input |> to_string);
+  printf "%s" (M.part1 input |> to_string);
   [%expect {| 572 |}];
-  printf "%s" (Aoc.Day2.part2 input |> to_string);
+  printf "%s" (M.part2 input |> to_string);
   [%expect {| 306 |}]
+;;
+
+let%expect_test "day 3" =
+  let module M = Aoc.Day3 in
+  let input = M.of_string [%blob "day/3/input"] in
+  let to_string x = Int.to_string x in
+  printf "%s" (M.part1 input |> to_string);
+  [%expect {| 240 |}];
+  printf "%s" (M.part2 input |> to_string);
+  [%expect {| 2832009600 |}]
 ;;
